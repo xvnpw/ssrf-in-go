@@ -6,9 +6,13 @@ load('ext://restart_process', 'docker_build_with_restart')
 # publicapi
 ###
 
+compile_cmd = 'CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o build/publicapi ./'
+if os.name == 'nt':
+  compile_cmd = 'build.bat'
+
 local_resource(
   'publicapi-compile',
-  'CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o build/publicapi ./',
+  compile_cmd,
   dir="./publicapi",
   deps=['./publicapi/main.go'])
 
@@ -33,9 +37,13 @@ k8s_resource('publicapi', port_forwards='8001:8080',
 # backendapi
 ###
 
+compile_cmd = 'CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o build/backendapi ./'
+if os.name == 'nt':
+  compile_cmd = 'build.bat'
+
 local_resource(
   'backendapi-compile',
-  'CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o build/backendapi ./',
+  compile_cmd,
   dir="./backendapi",
   deps=['./backendapi/main.go'])
 
@@ -59,9 +67,13 @@ k8s_resource('backendapi', resource_deps=['backendapi-compile'])
 # imageapi
 ###
 
+compile_cmd = 'CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o build/imageapi ./'
+if os.name == 'nt':
+  compile_cmd = 'build.bat'
+
 local_resource(
   'imageapi-compile',
-  'CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o build/imageapi ./',
+  compile_cmd,
   dir="./imageapi",
   deps=['./imageapi/main.go'])
 

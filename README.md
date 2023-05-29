@@ -2,9 +2,17 @@
 
 Presentation about SSRF in Go from BSides Conference
 
-## Install
+## Requirements
 
-Create kubernetes cluster using kind
+Install:
+
+- [ctlptl](https://github.com/tilt-dev/ctlptl)
+- [kind](https://kind.sigs.k8s.io)
+- [tilt](https://tilt.dev)
+
+## Setup
+
+Create kubernetes cluster using kind:
 
 ```
 ctlptl create cluster kind --registry=ctlptl-registry
@@ -17,6 +25,5 @@ tilt up
 ```
 
 ```
-curl -s \
-http://localhost:8001/debug\?url\=http://backendapi/internal
+curl -s http://localhost:8001/debug\?url\=http://backendapi/internal
 ```
