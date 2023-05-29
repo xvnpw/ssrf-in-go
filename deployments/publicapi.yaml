@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: publicapi
+  labels:
+    app: publicapi
+spec:
+  selector:
+    matchLabels:
+      app: publicapi
+  template:
+    metadata:
+      labels:
+        app: publicapi
+    spec:
+      containers:
+      - name: publicapi
+        image: publicapi-image
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: publicapi
+spec:
+  selector:
+    app: publicapi
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
